@@ -1,0 +1,37 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "validate:cloudinary": "node scripts/validate-cloudinary.js",
+    "setup:cloudinary": "node scripts/validate-cloudinary.js",
+    "validate:paypal": "node scripts/validate-paypal.js",
+    "setup:paypal": "node scripts/validate-paypal.js",
+    "test:mock-payment": "node scripts/test-mock-payment.js",
+    "validate:jwt": "node scripts/validate-jwt.js",
+    "setup:jwt": "node scripts/validate-jwt.js"
+  },
+  "author": "sangam mukherjee",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/dialogflow": "^7.1.0",
+    "@paypal/paypal-server-sdk": "^1.1.0",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.7.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dialogflow": "^1.2.0",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.17.1",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^7.0.6",
+    "nodemon": "^3.1.10"
+  }
+}

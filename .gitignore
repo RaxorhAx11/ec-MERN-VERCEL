@@ -1,0 +1,53 @@
+# Node
+node_modules/
+
+# Builds
+client/dist/
+client/.vite/
+server/build/
+client/.cache/
+
+# Env
+.env
+.env.*
+client/.env
+server/.env
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS/Editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Coverage
+coverage/
+coverage-*/
+.nyc_output/
+.coverage/
+.eslintcache
+
+# Local data/uploads
+uploads/
+
+# Misc
+*.local
+
+# Project docs and setup scripts (exclude from GitHub)
+CLOUDINARY_README.md
+CLOUDINARY_SETUP.md
+ENVIRONMENT_SETUP.md
+JWT_CONFIGURATION_GUIDE.md
+MOCK_PAYMENT_GUIDE.md
+PAYPAL_SETUP.md
+setup-env.bat
+setup-env.sh
+validate-env.js
+
