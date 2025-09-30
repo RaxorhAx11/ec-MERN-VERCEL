@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const User = require("../../models/User");
 const { sendPasswordResetEmail, sendWelcomeEmail } = require("../../helpers/email");
+const { setAuthCookie, clearAuthCookie, parseCookies } = require("../../lib/middleware");
 
 //register
 const registerUser = async (req, res) => {
@@ -124,14 +125,12 @@ const loginUser = async (req, res) => {
     );
 
     // Set cookie
-    const cookieOptions = {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    };
+    // Set auth cookie via header (compatible with serverless functions)
+    setAuthCookie(res, token, {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
-    res.cookie("token", token, cookieOptions).json({
+    res.status(200).json({
       success: true,
       message: "Login successful",
       user: {
@@ -153,7 +152,8 @@ const loginUser = async (req, res) => {
 
 //logout
 const logoutUser = (req, res) => {
-  res.clearCookie("token").json({
+  clearAuthCookie(res);
+  res.status(200).json({
     success: true,
     message: "Logged out successfully!",
   });
@@ -267,7 +267,15 @@ const resetPassword = async (req, res) => {
 
 //auth middleware
 const authMiddleware = async (req, res, next) => {
-  const token = req.cookies.token;
+  // Attempt to read token from cookie header or bearer auth
+  let token = null;
+  if (req.headers && req.headers.authorization) {
+    token = req.headers.authorization.replace('Bearer ', '');
+  }
+  if (!token) {
+    const cookies = parseCookies(req.headers?.cookie);
+    token = cookies.token;
+  }
   if (!token) {
     return res.status(401).json({
       success: false,
